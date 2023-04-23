@@ -13,11 +13,9 @@ export class App extends Component {
   };
 
   onAddFeedback = feedbackType => {
-    this.setState(prevState => {
-      const nextState = { ...prevState };
-      nextState[feedbackType] += 1;
-      return nextState;
-    });
+    this.setState(prevState => ({
+      [feedbackType]: prevState[feedbackType] + 1,
+    }));
   };
 
   countTotalFeedback = () => {
@@ -33,7 +31,10 @@ export class App extends Component {
     return (
       <div>
         <Section title="Please leave feedback">
-          <FeedbackOptions onAddFeedback={this.onAddFeedback} />
+          <FeedbackOptions
+            options={Object.keys(this.state)}
+            onAddFeedback={this.onAddFeedback}
+          />
         </Section>
         <Section title="Statistics">
           {this.countTotalFeedback() ? (
